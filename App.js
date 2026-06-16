@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useWindowDimensions } from 'react-native';
 
 import StaffList from './screens/StaffList';
 import StaffDetails from './screens/StaffDetails';
@@ -17,26 +18,26 @@ export default function App() {
     {
       id: '1',
       name: 'John Smith',
-      phone: '0400 123 456',
-      department: 'IT',
+      phone: '02 99882211',
+      department: 'ICT',
       address: {
-        street: '10 George St',
-        city: 'Sydney',
+        street: '1 Code Lane',
+        city: 'Javaville',
         state: 'NSW',
-        zip: '2000',
+        zip: '0100',
         country: 'Australia',
       },
     },
     {
       id: '2',
-      name: 'Sarah Brown',
-      phone: '0411 222 333',
-      department: 'HR',
+      name: 'Sue White',
+      phone: '03 88992255',
+      department: 'Finance',
       address: {
-        street: '25 Pitt St',
-        city: 'Sydney',
-        state: 'NSW',
-        zip: '2001',
+        street: '16 Bit Way',
+        city: 'Byte Cove',
+        state: 'Qld',
+        zip: '1101',
         country: 'Australia',
       },
     },
@@ -79,39 +80,49 @@ export default function App() {
   );
 }
 
+
 function Home({ navigation }) {
+  const { width } = useWindowDimensions();
+  const isTablet = width >= 768;
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, isTablet && styles.containerTablet]}>
       {/* Full-width ROI Logo */}
       <Image
         source={require('./assets/ROI_Logo.jpg')}
-        style={styles.logo}
+        style={[styles.logo, isTablet && styles.logoTablet]}
         resizeMode="contain"
       />
 
       {/* Title */}
-      <Text style={styles.title}>ROI Staff Directory</Text>
+      <Text style={[styles.title, isTablet && styles.titleTablet]}>
+        ROI STAFF DIRECTORY
+      </Text>
 
       {/* Banner Image */}
       <BannerImage
         source={require('./assets/workplace_collaboration.png')}
-        bannerHeight={260}       // adjust size of image
+        bannerHeight={isTablet ? 320 : 260}
         overlayOpacity={0.35}
       />
 
       {/* Navigation Buttons */}
       <TouchableOpacity
-        style={styles.button}
+        style={[styles.button, isTablet && styles.buttonTablet]}
         onPress={() => navigation.navigate('StaffList')}
       >
-        <Text style={styles.buttonText}>View Staff Profiles</Text>
+        <Text style={[styles.buttonText, isTablet && styles.buttonTextTablet]}>
+          View Staff Profiles
+        </Text>
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={styles.button}
+        style={[styles.button, isTablet && styles.buttonTablet]}
         onPress={() => navigation.navigate('ManageStaffList')}
       >
-        <Text style={styles.buttonText}>Manage Staff Profiles</Text>
+        <Text style={[styles.buttonText, isTablet && styles.buttonTextTablet]}>
+          Manage Staff Profiles
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -126,28 +137,52 @@ const styles = StyleSheet.create({
 
   logo: {
     width: '100%',      // full width
-    height: 140,        //taller logo
+    height: 150,        //taller logo
     marginBottom: 10,
   },
 
   title: {
-    fontSize: 22,
+    color: '#941a1d',
+    fontSize: 28,
     marginBottom: 15,
     fontWeight: 'bold',
     textAlign: 'center',
   },
 
   button: {
-    backgroundColor: '#941a1d',
-    padding: 12,
-    width: '100%',
+    backgroundColor: '#ffffff',
+    paddingVertical: 12,
+    width: '75%',
+    borderRadius: 10,
     marginBottom: 10,
+    alignSelf: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
   },
 
   buttonText: {
-    color: '#fff',
-    fontSize: 16,
+    color: '#595959',
+    fontSize: 22,
     fontWeight: 'bold',
   },
+
+  containerTablet: {
+  paddingHorizontal: 40, //more space on wide screens
+},
+
+logoTablet: {
+  height: 200, //taller logo on tablet
+},
+
+titleTablet: {
+  fontSize: 34, //stronger hierarchy
+},
+
+buttonTablet: {
+  width: '60%', //buttons don’t get too wide
+},
+
+buttonTextTablet: {
+  fontSize: 24,
+},
 });

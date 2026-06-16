@@ -22,7 +22,7 @@ export default function StaffList({ navigation, staffList }) {
       {/*image for managestaff screen*/}
         <BannerImage
           source={require('../assets/stafflist_image.png')}
-          bannerHeight={150}       // adjust Banner size
+          bannerHeight={150}  // adjust Banner size
           overlayOpacity={0.25}
         />
 
