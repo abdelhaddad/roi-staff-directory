@@ -1,3 +1,9 @@
+/**
+ * Header.js by Abdel Haddad 16/06/2026
+ * contains company styled logo and title for other navigation screens to use.
+ * Aim is to minimise repitition of inserting images/title and their styles
+ */
+//Imports
 import React from 'react';
 import { View, Text, Image, StyleSheet, useWindowDimensions } from 'react-native';
 
@@ -32,10 +38,8 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'space-between',
-
-    //equal space on left & right
     paddingHorizontal: 20,
-    marginBottom: 10,
+    marginBottom: 15, 
   },
 
   containerTablet: {
@@ -44,33 +48,35 @@ const styles = StyleSheet.create({
   },
 
   logoContainer: {
-    width: '50%',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-  },
+  width: '50%',
+  justifyContent: 'center',   // fixed
+  alignItems: 'center',       // centre logo in its half
+},
 
   logo: {
     width: '100%',
-    height: 70,
+    height: 120,
   },
 
   logoTablet: {
-    height: 90,
+    height: 160,
   },
 
   titleContainer: {
     width: '50%',
     justifyContent: 'center',
     alignItems: 'flex-start',
+    paddingLeft: 20,
   },
 
   title: {
-    fontSize: 20,
+    fontSize: 28,
     fontWeight: 'bold',
     color: '#262626',
   },
 
   titleTablet: {
-    fontSize: 24,
+    fontSize: 32,
+    paddingLeft: 30,
   },
 });

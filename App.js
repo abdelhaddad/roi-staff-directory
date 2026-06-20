@@ -1,9 +1,16 @@
+/*
+ * App.js by Abdel Haddad 16/06/2026
+ * Home screen of the ROI Staff Directory application.
+ * User will be able to navigate to other screens from this home page.
+ */
+//Imports
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useWindowDimensions } from 'react-native';
 
+// Importing different Screens that the user can navigate to
 import StaffList from './screens/StaffList';
 import StaffDetails from './screens/StaffDetails';
 import ManageStaffList from './screens/ManageStaffList';
@@ -14,6 +21,7 @@ import BannerImage from './components/BannerImage';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  //Default state holding staff profile data
   const [staffList, setStaffList] = useState([
     {
       id: '1',
@@ -44,18 +52,19 @@ export default function App() {
   ]);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer> {/* Stack navigation for App screens */}
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {/* Home Screen */}
         <Stack.Screen name="Home">
           {(props) => <Home {...props} />}
         </Stack.Screen>
-
+        {/* Staff List Screen */}
         <Stack.Screen name="StaffList">
           {(props) => <StaffList {...props} staffList={staffList} />}
         </Stack.Screen>
-
+        {/* Staff Details Screen */}
         <Stack.Screen name="StaffDetails" component={StaffDetails} />
-
+        {/* Manage Staff List Screen */}
         <Stack.Screen name="ManageStaffList">
           {(props) => (
             <ManageStaffList
@@ -65,7 +74,7 @@ export default function App() {
             />
           )}
         </Stack.Screen>
-
+        {/* Add/Edit staff screen */}
         <Stack.Screen name="EditStaff">
           {(props) => (
             <EditStaff
@@ -84,6 +93,7 @@ export default function App() {
 function Home({ navigation }) {
   const { width } = useWindowDimensions();
   const isTablet = width >= 768;
+  const [largeText, setLargeText] = useState(false);
 
   return (
     <View style={[styles.container, isTablet && styles.containerTablet]}>
@@ -109,7 +119,7 @@ function Home({ navigation }) {
       {/* Navigation Buttons */}
       <TouchableOpacity
         style={[styles.button, isTablet && styles.buttonTablet]}
-        onPress={() => navigation.navigate('StaffList')}
+        onPress={() => navigation.navigate('StaffList', {largeText})}
       >
         <Text style={[styles.buttonText, isTablet && styles.buttonTextTablet]}>
           View Staff Profiles
@@ -122,6 +132,18 @@ function Home({ navigation }) {
       >
         <Text style={[styles.buttonText, isTablet && styles.buttonTextTablet]}>
           Manage Staff Profiles
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.toggleButton}
+        onPress={() => {
+          console.log('TOGGLE PRESSED, current value:', largeText);
+          setLargeText(!largeText);
+        }}
+      >
+        <Text style={styles.toggleText}>
+          {largeText ? 'Disable Large Text' : 'Enable Large Text'}
         </Text>
       </TouchableOpacity>
     </View>

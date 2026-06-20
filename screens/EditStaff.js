@@ -1,3 +1,9 @@
+/**
+ * EditStaff.js by Abdel Haddad 16/06/2026
+ * Used to add a new staff profile or update an existing one.
+ * Displays a form and saves changes to the staff list.
+ */
+//imports
 import React, { useState } from 'react';
 import {
   View,
@@ -6,7 +12,6 @@ import {
   TouchableOpacity,
   Alert,
   StyleSheet,
-  SafeAreaView,
 } from 'react-native';
 import Header from './Header';
 
@@ -16,8 +21,9 @@ export default function EditStaff({
   staffList,
   setStaffList,
 }) {
+  // Existing staff profile to edit
   const staff = route.params?.staff;
-
+  // Form state
   const [name, setName] = useState(staff?.name || '');
   const [phone, setPhone] = useState(staff?.phone || '');
   const [department, setDepartment] = useState(staff?.department || '');
@@ -26,13 +32,13 @@ export default function EditStaff({
   const [state, setState] = useState(staff?.address?.state || '');
   const [zip, setZip] = useState(staff?.address?.zip || '');
   const [country, setCountry] = useState(staff?.address?.country || '');
-
+  // save or update staff profile
   const save = () => {
     if (!name) {
       Alert.alert('Error', 'Name is required');
       return;
     }
-
+  // Update or insert staff record
     const updatedStaff = staff
       ? staffList.map((s) =>
           s.id === staff.id
@@ -68,10 +74,9 @@ export default function EditStaff({
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        {/* ROI Logo */}
-        <Header title="" />
+        {/* Header */}
+        <Header title= {staff ? 'Update Staff Profile' : 'Add Staff Profile'}  />
 
         {/* Back button under logo */}
         <TouchableOpacity
@@ -80,11 +85,6 @@ export default function EditStaff({
         >
           <Text style={styles.backText}>Back</Text>
         </TouchableOpacity>
-
-        {/* Screen title */}
-        <Text style={styles.title}>
-          {staff ? 'Update Staff Profile' : 'Add Staff Profile'}
-        </Text>
 
         {/* Form */}
         <TextInput
@@ -141,16 +141,11 @@ export default function EditStaff({
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
   );
 }
 
 /* STYLES */
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: '#D9D9D9', // grey background
-  },
 
   container: {
     flex: 1,
@@ -166,12 +161,7 @@ const styles = StyleSheet.create({
   backText: {
     color: '#941a1d',
     fontWeight: 'bold',
-  },
-
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 15,
+    fontSize: 22,
   },
 
   input: {
@@ -183,14 +173,19 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: '#941a1d',
-    padding: 12,
-    marginTop: 10,
+    backgroundColor: '#595959',
+    paddingVertical: 12,
+    width: '75%',
+    borderRadius: 10,
+    marginBottom: 10,
+    alignSelf: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
   },
 
   buttonText: {
-    color: '#fff',
+    color: '#ffff',
+    fontSize: 22,
     fontWeight: 'bold',
   },
 });

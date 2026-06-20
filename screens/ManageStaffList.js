@@ -1,3 +1,8 @@
+/**
+ * ManageStaffList.js by Abdel Haddad 16/06/2026
+ * Allows user to manage staff profiles.
+ * Supports selecting, editing, and deleting staff records.
+ */
 // IMPORTS 
 import React, { useState } from 'react';
 import {
@@ -7,7 +12,6 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  SafeAreaView,
 } from 'react-native';
 import Header from './Header';
 import BannerImage from '../components/BannerImage';
@@ -18,7 +22,8 @@ export default function ManageStaffList({
   staffList,
   setStaffList,
 }) {
-  const [search, setSearch] = useState('');
+  //Track selected staff profile
+  const [search, setSearch] = useState(''); 
   const [selectedId, setSelectedId] = useState(null);
 
   const filteredStaff = staffList.filter(
@@ -27,7 +32,6 @@ export default function ManageStaffList({
       s.department.toLowerCase().includes(search.toLowerCase()) ||
       s.phone.includes(search)
   );
-
   // DELETE button to delete selected staff profile
   const deleteSelectedStaff = () => {
     if (!selectedId) return;
@@ -38,10 +42,8 @@ export default function ManageStaffList({
 
     setSelectedId(null);
   };
-
   // JSX
   return (
-    <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         {/* Header */}
         <Header title="Manage Staff Profiles" />
@@ -69,7 +71,7 @@ export default function ManageStaffList({
           onChangeText={setSearch}
         />
 
-        {/* Staff list */}
+        {/* Staff list to edit/add/delete */}
         <View style={{ flex: 1 }}>
           <FlatList
             data={filteredStaff}
@@ -125,16 +127,11 @@ export default function ManageStaffList({
           </TouchableOpacity>
         </View>
       </View>
-    </SafeAreaView>
   );
 }
 
 // STYLES
 const styles = StyleSheet.create({
-  safeArea: {
-  flex: 1,
-  backgroundColor: '#D9D9D9', //grey background
-},
 
 container: {
   flex: 1,
@@ -150,6 +147,7 @@ homeBtn: {
 homeText: {
   color: '#941a1d',
   fontWeight: 'bold',
+  fontSize: 22,
 },
 
   search: {
@@ -183,7 +181,7 @@ homeText: {
   },
 
   actionButton: {
-    backgroundColor: '#941a1d',
+    backgroundColor: '#595959',
     paddingVertical: 10,
     paddingHorizontal: 20,
   },
